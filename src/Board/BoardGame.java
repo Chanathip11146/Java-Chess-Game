@@ -3,6 +3,7 @@ package Board;
 import Pieces.Bishop;
 import Pieces.King;
 import Pieces.Knight;
+import Pieces.Pawn;
 import Pieces.Piece;
 import Pieces.Queen;
 import Pieces.Rook;
@@ -40,8 +41,23 @@ public class BoardGame {
         board[7][1] = new Knight("White", 7, 1);
         board[7][6] = new Knight("White", 7, 6);
         
-
-
+        //วางเบี้ย
+        board[1][0] = new Pawn("Black", 1, 0);
+        board[1][1] = new Pawn("Black", 1, 1);
+        board[1][2] = new Pawn("Black", 1, 2);
+        board[1][3] = new Pawn("Black", 1, 3);
+        board[1][4] = new Pawn("Black", 1, 4);
+        board[1][5] = new Pawn("Black", 1, 7);
+        board[1][6] = new Pawn("Black", 1, 6);
+        board[1][7] = new Pawn("Black", 1, 7);
+        board[6][0] = new Pawn("White", 6, 0);
+        board[6][1] = new Pawn("White", 6, 1);
+        board[6][2] = new Pawn("White", 6, 2);
+        board[6][3] = new Pawn("White", 6, 3);
+        board[6][4] = new Pawn("White", 6, 4);
+        board[6][5] = new Pawn("White", 6, 7);
+        board[6][6] = new Pawn("White", 6, 6);
+        board[6][7] = new Pawn("White", 6, 7);
     }
 
 
@@ -62,7 +78,8 @@ public class BoardGame {
 
     public boolean movePiece(int startRow, int startCol, int endRow, int endCol) { //ย้ายหมาก
         
-        if (startRow < 0 || startRow > 7 || endRow < 0 || endRow > 7) { //เช็กว่าเกินกระดานหรือป่าว
+        if (startRow < 0 || startRow > 7 || endRow < 0 || endRow > 7|| 
+            endRow < 0 || endRow > 7 || endCol < 0 || endCol > 7) { //เช็กว่าเกินกระดานหรือป่าว
             System.out.println("Please try again using numbers 0-7.");
             return false;
             }
@@ -74,7 +91,7 @@ public class BoardGame {
         
         Piece selectedPiece = board[startRow][startCol]; //เลือกออกมาก่อน
 
-        if(!isTurn(selectedPiece)) return false;
+        if(!isTurn(selectedPiece)) return false; //เช็กว่าใช้ตาของเราที่เดินไหม
             
             //เช็กปลายทางว่ามีหมากไหมและใช่ฝ่ายเดียวกันหรือป่าว
         if (board[endRow][endCol] != null && selectedPiece.getColor().equals(board[endRow][endCol].getColor())) { 
@@ -86,11 +103,24 @@ public class BoardGame {
         if (selectedPiece.isValidMove(endRow, endCol)) {
              
             //เข็กตัวที่ขวางทางอยู่ ยกเว้นม้าเพราะมันกระโดดได้
-            if (!selectedPiece.getName().equals("N")) { 
+            if (!selectedPiece.getName().equals("N" )) { 
                 if (!isPathClear(startRow, startCol, endRow, endCol)) {
-                    System.out.println("Error, มีตัวหมากขวางทางเดิน!");
+                    System.out.println("Error, You can't go there");
                     return false;
                     }
+            }
+
+            if (selectedPiece.getName().equals("P")){
+                int diffCol = Math.abs(startCol - endCol);
+                if (board[endRow][endCol] != null && diffCol == 0) {
+                    System.out.println("Error, You can't go there");
+                    return false;
+                }
+                if (board[endRow][endCol] == null && diffCol == 1) {
+                    System.out.println("Error, You can't go there");
+                    return false;
+                }
+               
             }
 
             //วางปลายทาง
