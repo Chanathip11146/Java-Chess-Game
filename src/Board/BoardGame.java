@@ -47,7 +47,7 @@ public class BoardGame {
         board[1][2] = new Pawn("Black", 1, 2);
         board[1][3] = new Pawn("Black", 1, 3);
         board[1][4] = new Pawn("Black", 1, 4);
-        board[1][5] = new Pawn("Black", 1, 7);
+        board[1][5] = new Pawn("Black", 1, 5);
         board[1][6] = new Pawn("Black", 1, 6);
         board[1][7] = new Pawn("Black", 1, 7);
         board[6][0] = new Pawn("White", 6, 0);
@@ -55,7 +55,7 @@ public class BoardGame {
         board[6][2] = new Pawn("White", 6, 2);
         board[6][3] = new Pawn("White", 6, 3);
         board[6][4] = new Pawn("White", 6, 4);
-        board[6][5] = new Pawn("White", 6, 7);
+        board[6][5] = new Pawn("White", 6, 5);
         board[6][6] = new Pawn("White", 6, 6);
         board[6][7] = new Pawn("White", 6, 7);
     }
@@ -164,5 +164,9 @@ public class BoardGame {
             currentCol += colStep;
         }
         return true; // ไม่มีอะไรกั้น
+    }
+
+    public Piece[][] getBoard() {
+        return board;
     }
 }
